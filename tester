@@ -1,0 +1,22 @@
+#!bin/bash
+if [ $# -eq 0 ]; then
+  echo "------No ARGUMENTS SUPPLIED"
+else
+  echo "------COMPILING FILE $1"
+  g++ -Wall -Wextra $1 -o output.out
+fi
+for i in `seq 1 3`;
+do
+  echo "------TEST $i"
+  var1=$(./output.out < testy/test$i.txt)
+  var2=$(cat testy/ans$i.txt)
+  if [ "$var1" == "$var2" ]; then
+      echo "------CORRECT"
+  else
+      echo "------SOMETHING IS WRONG! Your output is:"
+      echo "$var1"
+      echo "------Instead of that should be:"
+      echo "$var2"
+  fi
+done
+rm output.out
